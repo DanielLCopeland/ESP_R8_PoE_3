@@ -1,0 +1,178 @@
+esphome:
+  name: esp-r8-poe-3
+  platform: ESP32
+  board: esp32dev
+
+wifi:
+  ap:
+    ssid: "ESP32-R8-POE-3"
+    password: "password"
+    
+captive_portal:
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+    
+status_led:
+  pin: GPIO14
+  
+i2c:
+   - id: bus_a
+     sda: 32
+     scl: 33
+     scan: True
+   
+time:
+  - platform: ds1307
+    update_interval: never
+    id: on_board_time
+  - platform: homeassistant
+    id: homeassistant_time
+    on_time_sync:
+      then:
+        ds1307.write_time:
+    
+        
+pcf8574:
+  - id: 'output_expander'
+    address: 0x23
+    pcf8575: False
+  - id: 'input_expander'
+    address: 0x25
+    pcf8575: False
+
+# Individual outputs
+switch:
+  - platform: gpio
+    id: relay_1
+    name: "Relay 1"
+    pin:
+      pcf8574: output_expander
+      # Use pin number 0
+      number: 0
+      # One of INPUT or OUTPUT
+      mode: OUTPUT
+      inverted: False
+      
+  - platform: gpio
+    name: "Relay 2"
+    pin:
+      pcf8574: output_expander
+      # Use pin number 1
+      number: 1
+      # One of INPUT or OUTPUT
+      mode: OUTPUT
+      inverted: False
+      
+  - platform: gpio
+    name: "Relay 3"
+    pin:
+      pcf8574: output_expander
+      # Use pin number 2
+      number: 2
+      # One of INPUT or OUTPUT
+      mode: OUTPUT
+      inverted: False
+      
+  - platform: gpio
+    name: "Relay 4"
+    pin:
+      pcf8574: output_expander
+      # Use pin number 3
+      number: 3
+      # One of INPUT or OUTPUT
+      mode: OUTPUT
+      inverted: False
+      
+  - platform: gpio
+    name: "Relay 5"
+    pin:
+      pcf8574: output_expander
+      # Use pin number 4
+      number: 4
+      # One of INPUT or OUTPUT
+      mode: OUTPUT
+      inverted: False
+      
+  - platform: gpio
+    name: "Relay 6"
+    pin:
+      pcf8574: output_expander
+      # Use pin number 5
+      number: 5
+      # One of INPUT or OUTPUT
+      mode: OUTPUT
+      inverted: False
+      
+  - platform: gpio
+    name: "Relay 7"
+    pin:
+      pcf8574: output_expander
+      # Use pin number 6
+      number: 6
+      # One of INPUT or OUTPUT
+      mode: OUTPUT
+      inverted: False
+      
+  - platform: gpio
+    name: "Relay 8"
+    pin:
+      pcf8574: output_expander
+      # Use pin number 7
+      number: 7
+      # One of INPUT or OUTPUT
+      mode: OUTPUT
+      inverted: False
+      
+binary_sensor:
+  - platform: gpio
+    pin:
+      pcf8574: input_expander
+      number: 0
+      mode: INPUT
+    name: "Input 1"
+  - platform: gpio
+    pin:
+      pcf8574: input_expander
+      number: 1
+      mode: INPUT
+    name: "Input 2"
+  - platform: gpio
+    pin:
+      pcf8574: input_expander
+      number: 2
+      mode: INPUT
+    name: "Input 3"
+  - platform: gpio
+    pin:
+      pcf8574: input_expander
+      number: 3
+      mode: INPUT
+    name: "Input 4"
+  - platform: gpio
+    pin:
+      pcf8574: input_expander
+      number: 4
+      mode: INPUT
+    name: "Input 5"
+  - platform: gpio
+    pin:
+      pcf8574: input_expander
+      number: 5
+      mode: INPUT
+    name: "Input 6"
+  - platform: gpio
+    pin:
+      pcf8574: input_expander
+      number: 6
+      mode: INPUT
+    name: "Input 7"
+  - platform: gpio
+    pin:
+      pcf8574: input_expander
+      number: 7
+      mode: INPUT
+    name: "Input 8"
